@@ -21,12 +21,12 @@ def get_words_name_img_byArtist(artist_name):   #returns list of tuples
     img=artist.image_url
     nm=artist.name
 
-    # redact the string #
+    # redact the string 1step#
     unredacted1=''
     for song in artist.songs:
         unredacted1+=song.lyrics
         unredacted1 +="["
-    # remove []
+    # remove [] 2step
     redactedLyrics = ''
     for i in range(0,len(unredacted1)):
         if unredacted1[i] == "]":
@@ -34,7 +34,7 @@ def get_words_name_img_byArtist(artist_name):   #returns list of tuples
                 if unredacted1[j] =="[":
                     redactedLyrics += unredacted1[i+1:j]
                     break
-    # remove ()
+    # remove () 3step
     unredacted2 = ")" + redactedLyrics + "("
     redactedLyrics = ''
     for i in range(0,len(unredacted2)):
@@ -43,7 +43,7 @@ def get_words_name_img_byArtist(artist_name):   #returns list of tuples
                 if unredacted2[j] =="(":
                     redactedLyrics += unredacted2[i+1:j]
                     break
-
+    # 4step
     redactedLyrics = redactedLyrics.replace('\n'," ")
     redactedLyrics = redactedLyrics.lower()
     redactedLyrics = redactedLyrics.replace("Embed", '  ')
@@ -167,16 +167,17 @@ def get_words_name_img_byArtist(artist_name):   #returns list of tuples
     redactedLyrics = redactedLyrics.replace("  ", " ")
     redactedLyrics = redactedLyrics.replace("   ", " ")
     redactedLyrics = redactedLyrics.replace("    ", " ")
+
+    # return values
     if redactedLyrics =="":
         return [[],nm,img]
+
     words = count_words(redactedLyrics, 100)
     i=0
     for tpl in words: 
         if tpl[0]=='':
             words.pop(i)
         i+=1
-    # words.pop(i-1)
-
     res = [words,nm,img]
     return res
 
@@ -189,7 +190,7 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return render_template('index.html', words_list=[],artist_name='',artist_img='')
-# http://127.0.0.1:5000/artist?input_artist=morgenshtern
+
 @app.route("/artist")
 def artist():
     user_artist_name = request.args.get('input_artist')
