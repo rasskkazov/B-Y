@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B&Y</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/style.css')}}">
+    <link rel="icon" href='/static/imgs/site_icon.png'>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gugi&family=Poppins:wght@200;500&display=swap');
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <form class="search content_search" id="form" action="/artist">
+                <input class="search_field" name="input_artist" id="search_field" type="text" placeholder="Search artist">
+                <button class="search_button" type="submit"><img src="/static/imgs/search_icon.svg" alt=""></button>
+            </form>
+            {% if artist_name %}
+            <div class="content_group group">
+                <div class="group_title">Find out which words your artist uses the most*</div>
+                
+                <div class="group_photo">
+                    <!-- <img class="gr" src="/static/imgs/ava.jpg" alt=""> -->
+                    <img class="gr" src={{artist_img}} alt="">
+                    
+                    <img class="border" src="/static/imgs/mask_border.png" alt="">
+                </div>
+                <div class="group_name">{{artist_name}}</div>
+            </div>
+
+            <div class="words content_words">
+                <div class="words_list" id ="result">
+                    {% for word in words_list %}
+                        <div class="words_word">{{word[0]}} | {{word[1]}}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>        
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
