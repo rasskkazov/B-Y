@@ -14,14 +14,14 @@
 <body>
     <div class="container">
         <div class="content">
-            <form class="search content_search" id="form" action="/artist">
-                <input class="search_field" name="input_artist" id="search_field" type="text" placeholder="Search artist">
+            <form class="search content_search" action="/artist">
+                <input class="search_field" name="input_artist" type="text" placeholder="Search artist">
                 <button class="search_button" type="submit"><img src="/static/imgs/search_icon.svg" alt=""></button>
             </form>
-            {% if artist_name %}
+            
             <div class="content_group group">
                 <div class="group_title">Find out which words your artist uses the most*</div>
-                
+                {% if artist_name %}
                 <div class="group_photo">
                     <!-- <img class="gr" src="/static/imgs/ava.jpg" alt=""> -->
                     <img class="gr" src={{artist_img}} alt="">
