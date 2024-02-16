@@ -2,14 +2,14 @@ import lyricsgenius
 from collections import Counter
 
 def count_words(s, n):  #necessary for get words
-        words = s.split(" ");
+        words = s.split(" ")
         words = Counter(words)
         top_n = words.most_common(n)
         return top_n
 def get_words_name_img_byArtist(artist_name):   #returns list of tuples
-    genius = lyricsgenius.Genius("sxDFwDiAtZBe5Isp8ULM9HRUk6NkLQlRLp7toliPN9yOdboykVqNXc9F0OTqOXFC")
+    genius = lyricsgenius.Genius("NSqTOpCMljY7_oBStwlBr9kUswUxiomhqILxOkyywPECfRtIK12PJpL6DzU3lDKk")
     try:
-        artist = genius.search_artist(artist_name,max_songs=2,sort="popularity")
+        artist = genius.search_artist(artist_name,max_songs=3,sort="popularity")
     except:
         print("network error")
         # return None
@@ -21,6 +21,7 @@ def get_words_name_img_byArtist(artist_name):   #returns list of tuples
     img=artist.image_url
     nm=artist.name
 
+    
     # redact the string 1step#
     unredacted1=''
     for song in artist.songs:
@@ -67,9 +68,9 @@ def get_words_name_img_byArtist(artist_name):   #returns list of tuples
     " as ", " but ", "!"
     ]
 
-    for pattern, replacement in patterns:
-        lyrics = lyrics.replace(pattern, " ")
-    lyrics = lyrics.strip()
+    for pattern in patterns:
+        redactedLyrics = redactedLyrics.replace(pattern, " ")
+    redactedLyrics = redactedLyrics.strip()
 
     # return values
     if redactedLyrics =="":
@@ -98,6 +99,7 @@ def index():
 def artist():
     user_artist_name = request.args.get('input_artist')
     res = get_words_name_img_byArtist(user_artist_name)
+    
     if res is None:
         exit()
     words_list,artist_name,artist_img = res
